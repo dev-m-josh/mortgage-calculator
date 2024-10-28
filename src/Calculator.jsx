@@ -6,6 +6,8 @@ const Calculator = () => {
   const [loanAmount, setLoanAmount] = useState('');
   const [interestRate, setInterestRate] = useState('');
   const [loanTerm, setLoanTerm] = useState('');
+  const [monthlyPayment, setMonthlyPayment] = useState(null);
+  const [totalRepayment, setTotalRepayment] = useState(null);
 
 
   const calculateMortgage = () => {
@@ -17,6 +19,10 @@ const Calculator = () => {
     const x = Math.pow(1 + interest, payments); //exponentiation 
     const monthly = (principal * x * interest) / (x - 1); //get monthly repayment
 
+    setMonthlyPayment(monthly.toFixed(2));
+    //total payment
+    const totalRepaymentAmt = monthlyPayment * 12;
+    setTotalRepayment(totalRepaymentAmt.toFixed(2));
 
   };
 
@@ -65,6 +71,10 @@ const Calculator = () => {
       </div>
       </div>
       <button onClick={calculateMortgage} disabled={!loanAmount || !interestRate || !loanTerm}>Calculate Repayments</button>
+    </div>
+    <div>
+    {monthlyPayment && <h2>Monthly Payment: ${monthlyPayment}</h2>}
+    {totalRepayment && <h2>Total Repayment: ${totalRepayment}</h2>}
     </div>
     </>
   );
